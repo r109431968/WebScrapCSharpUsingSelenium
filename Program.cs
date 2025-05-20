@@ -8,7 +8,7 @@ using WebScrappingECommerece;
 
 class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         string connectionString = "Data Source=DESKTOP-UFB6KUK\\SQLEXPRESS01;Initial Catalog=ECommereceDB;Integrated Security=True";
         var dbHelper = new DatabaseHelper(connectionString);
@@ -66,7 +66,7 @@ class Program
                 Console.WriteLine("Rating: " + rating);
 
                 string description = "";
-                dbHelper.InsertProduct(productName, price, rating, description);
+                await dbHelper.InsertProduct(productName, price, rating, description);
                 Console.WriteLine("Product details inserted into database successfully.");
             }
             catch (Exception ex)

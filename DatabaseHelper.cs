@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenQA.Selenium.Support.UI;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -17,7 +18,7 @@ namespace WebScrappingECommerece
             this.connectionString = connectionString;
         }
 
-        public void InsertProduct(string name, string price, string rating, string description)
+        public async Task InsertProduct(string name, string price, string rating, string description)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand("SPAddProduct", conn))
@@ -28,8 +29,9 @@ namespace WebScrappingECommerece
                 cmd.Parameters.AddWithValue("@Rating", rating ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@Description", description ?? (object)DBNull.Value);
 
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                await conn.OpenAsync();
+                await cmd.ExecuteNonQueryAsync();
+
             }
         }
     }
